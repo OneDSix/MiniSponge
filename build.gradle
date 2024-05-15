@@ -5,47 +5,28 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
-project.version = '0.4.0'
-
-def minicraftVerison = "2.0.7"
-
+project.version = '1.0.0' // Based off MiniMods 0.4.0
 sourceCompatibility = 8
-mainClassName = 'io.github.anvilloystudio.minimods.loader.LoaderInitialization'
+mainClassName = 'onedsix.loader.core.LoaderInitialization'
 [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
 
+sourceSets.main.java.srcDirs = [ "src/main/java/" ]
+sourceSets.main.resources.srcDirs = ["src/main/resources/", "../assets/"]
+
 repositories {
+    gradlePluginPortal()
     mavenCentral()
+    mavenLocal()
+    google()
+
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+    maven { url "https://jitpack.io" }
     maven { url "https://nexus.velocitypowered.com/repository/maven-public/" }
-    maven { url = 'https://maven.minecraftforge.net/' }
+    maven { url 'https://maven.minecraftforge.net/' }
 }
 
 dependencies {
-    // Minicraft+ base code dependencies. Updated for every version.
-    api project(path: ":minicraft-base", configuration: "shadow")
-    api 'org.jetbrains:annotations:21.0.1'
-    // api 'org.xbill:dns:2.0.8'
-    api 'commons-codec:commons-codec:1.15'
-    api 'commons-io:commons-io:2.4'
-    api 'commons-logging:commons-logging:1.2'
-    api 'dnsjava:dnsjava:3.4.1'
-    api 'org.apache.httpcomponents:httpasyncclient:4.1.4'
-    api 'org.apache.httpcomponents:httpclient:4.5.13'
-    api 'org.apache.httpcomponents:httpcore:4.4.14'
-    api 'org.apache.httpcomponents:httpcore-nio:4.4.14'
-    api 'org.apache.httpcomponents:httpmime:4.5.13'
-    api 'org.json:json:20210307'
-    api 'org.slf4j:slf4j-api:1.7.32'
-    api 'com.mashape.unirest:unirest-java:1.4.9'
-    api 'org.apache.xmlgraphics:xmlgraphics-commons:2.6'
-    testImplementation 'org.hamcrest:hamcrest:2.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
-
-    // Future Minicraft+ version implementation.
-    api 'org.json:json:20211205'
-    api 'com.konghq:unirest-java:3.13.7'
-    api 'org.tinylog:tinylog-api:2.4.1'
-    api 'org.tinylog:tinylog-impl:2.4.1'
-
     // Main Loader dependencies.
     implementation "org.spongepowered:mixin:0.8.5"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
@@ -54,10 +35,23 @@ dependencies {
     implementation "com.github.oshi:oshi-core:6.2.2"
     api "com.electronwill.night-config:toml:3.6.0"
     runtimeOnly 'net.minecraftforge:accesstransformers:8.0.4'
-    implementation('org.apache.maven:maven-artifact:3.8.1')
-    implementation fileTree(dir: 'libraries', include: '*.jar')
+    implementation 'org.apache.maven:maven-artifact:3.8.1'
+	compileOnly "org.jetbrains:annotations:23.0.0"
 
-    // Dependencies of mixin.
+	// JSON & TOML
+	api 'org.json:json:20210307' // TODO: move from org.json:json to google:gson
+	implementation "com.google.code.gson:gson:2.10.1"
+	implementation 'com.moandjiezana.toml:toml4j:0.7.2'
+
+	// Utilities
+	implementation 'org.projectlombok:lombok:1.18.32'
+	annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+	// Logging
+	implementation "org.slf4j:slf4j-api:1.7.32"
+	implementation "ch.qos.logback:logback-classic:1.2.6"
+
+    // Dependencies of SpongePowered:Mixin.
     api "org.ow2.asm:asm:9.3"
     api "org.ow2.asm:asm-tree:9.3"
     api "org.ow2.asm:asm-util:9.3"
@@ -77,43 +71,47 @@ javadoc {
 }
 
 jar {
-    delete(file("build/libs"))
-    file("build/libs/lib").mkdirs()
+
+    delete(file("build/distributable"))
+    file("build/distributable/lib").mkdirs()
     def paths = [];
     configurations.runtimeClasspath.each { dir ->
         def des = "lib/"
-        if (dir.getName().startsWith("minicraft_plus")) { des = "" }
-        if (dir.getName().startsWith("minicraft-base")) { return }
         paths.add(des + dir.getName())
         copy {
             from dir
-            into "build/libs/" + des
+            into "build/distributable/" + des
         }
     }
 
-    archivesBaseName = "minimods-${minicraftVerison}"
+    archivesBaseName = "minimods"
     archiveClassifier.set('')
 
     manifest {
         attributes(
-                'Main-Class': mainClassName,
-                'Implementation-Title': project.name,
-                'Implementation-Version': project.version,
-                'SplashScreen-Image': "Minicraft_Splash_Screen_3.png",
-                'Class-Path': String.join(" ", paths) // Adding class paths
-            )
+			'Main-Class': mainClassName,
+			'Implementation-Title': project.name,
+			'Implementation-Version': project.version,
+			'SplashScreen-Image': "Minicraft_Splash_Screen_3.png",
+			'Class-Path': String.join(" ", paths) // Adding class paths
+		)
     }
 }
 
 shadowJar {
-    archivesBaseName = "minimods-${minicraftVerison}"
+	distTar.enabled = false
+	distZip.enabled = false
+	shadowDistTar.enabled = false
+	shadowDistZip.enabled = false
+
+    archivesBaseName = "minimods"
 
     manifest {
         attributes(
-                'Main-Class': mainClassName,
-                'Implementation-Title': project.name,
-                'Implementation-Version': project.version,
-                'SplashScreen-Image': "Minicraft_Splash_Screen_3.png",
-            )
+			'Main-Class': mainClassName,
+			'Implementation-Title': project.name,
+			'Implementation-Version': project.version,
+			'SplashScreen-Image': "Minicraft_Splash_Screen_3.png",
+		)
     }
 }

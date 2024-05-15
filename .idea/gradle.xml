@@ -8,17 +8,10 @@
         <option name="testRunner" value="GRADLE" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="gradleHome" value="C:/Gradle/gradle-7.5.1" />
-        <option name="gradleJvm" value="#JAVA_HOME" />
+        <option name="gradleJvm" value="17" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/minicraft" />
-            <option value="$PROJECT_DIR$/minicraft/source" />
-            <option value="$PROJECT_DIR$/mods/core-ores" />
-            <option value="$PROJECT_DIR$/mods/core-redstone" />
-            <option value="$PROJECT_DIR$/mods/core-redstone-extra" />
-            <option value="$PROJECT_DIR$/mods/debug-test" />
           </set>
         </option>
       </GradleProjectSettings>

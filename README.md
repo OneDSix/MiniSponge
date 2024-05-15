@@ -1,38 +1,54 @@
-# MiniMods
+# MiniSponge Loader
 
-MiniMods is a mod loader for Minicraft+. To learn more about Minicraft+, you may go to [Minicraft GitHub repository](https://github.com/MinicraftPlus/minicraft-plus-revived).
+MiniSponge Loader is a near universal mod loader based off Minicraft+'s mod loader, [MiniMods](https://github.com/AnvilloyDevStudio/MiniMods).\
+This project was originally built for only 1D6, but I though others might get some use out of it as well.
 
-## License
+If you're interested about Minicraft+, go to the [Minicraft GitHub repository](https://github.com/MinicraftPlus/minicraft-plus-revived),\
+I highly recommend the game, even if development is slow these days. Drop a PR or two if you can!
 
-This repository is licensed with LGPL 2.1 and GPL 3, you should be able to find the corresponding license documents in the same directory of this source code. The overall license is named [`LICENSE` in the project's root directory](/LICENSE).
+## Setting up MSL
 
-`SPDX-License-Identifier: LGPL-2.1-only AND GPL-3-only`
+### Adding MSL to a project
 
-## Officially Supported Mods
+#### Pre-Compile
 
-There are some MiniMods officially supported mods that are available.
+TODO
 
-### API/Core Mods
+tldr;
+- import MSL using jitpack+gradle
+- set your project's entrypoint to MSL's entrypoint
+- add an MSL config with the project's entrypoint class
+- build the project
+- assuming all goes well, it should work immediately
 
-These mods are intended to be an modding API for supporting further modding experience and convenience.
+#### Post-Compile
 
-#### [Ores API](https://github.com/AnvilloyDevStudio/MiniMods-Mod-Core-Ores)
+TODO
 
-Core-Ores provides basic API functions for adding ores to Minicraft+.
+tldr;
+- unzip the jar
+- add the MSL config with the project's entrypoint class, along with MSL's class files
+- change the entrypoint in `META-INF/MANIFEST.mf` to MSL's entrypoint
+- assuming all goes well, it should work immediately
 
-### Other
+### MSL Config
 
-These mods are not intended to be an modding API, but provide extra features.
+TODO
 
-#### [Redstone](https://github.com/AnvilloyDevStudio/MiniMods-Mod-Core-Redstone)
+tldr;
+```json
+{
+  "entrypoint": "org.example.Entrypoint"
+}
+```
 
-Core-Redstone is a mod for the redstone system referenced from Minecraft. This has some similar mechanics from it.
+## Writing mods for MSL
 
-#### [Redstone Extra](https://github.com/AnvilloyDevStudio/MiniMods-Mod-Core-Redstone-Extra)
+Quite a few things have changed between MML and MSL,
+everything from the `mod.json` file, originally based on Fabric Loader's `*.mod.json`,
+being turned into a `mods.toml` file based on NeoForge Loader's `*.mods.toml` instead.
 
-Core-Redstone-Extra is a mod intended to expand functionalities with Core-Redstone.
-
-This is an archived project derived from Core-Redstone.
+TODO
 
 ## Building
 
@@ -41,3 +57,11 @@ As there are several batch files in this project, it is recommended to use Windo
 To build this project, the most recommended way is to use the [local batch file](build.bat). Use `.\build build` for Windows.
 
 Since there are some potential problem when executing general `.\gradlew build`. Please execute `.\gradlew :build` instead.
+
+## License
+
+This repository is licensed with LGPL 2.1 and GPL 3,\
+you should be able to find the corresponding license documents in the same directory of this source code.\
+The overall license is named [`LICENSE` in the project's root directory](/LICENSE).
+
+`SPDX-License-Identifier: LGPL-2.1-only AND GPL-3-only`
