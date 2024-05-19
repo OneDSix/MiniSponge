@@ -1,0 +1,21 @@
+{
+  "target": {
+    "entrypoint": "org.example.Entrypoint",
+    "version": "1.0.0",
+    "side": "CLIENT",
+  },
+  "loader": {
+    "dependencies": {
+      "ignoreCyclicErrors": false,
+      "ignoreMissingErrors": false
+    },
+    "target": {
+      "passArgs": true
+    },
+    "logging": {
+      "enableDebug": false,
+      "enableLogging": true,
+      "enablePassthroughLogging": true
+    }
+  }
+}

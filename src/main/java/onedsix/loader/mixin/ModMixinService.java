@@ -26,6 +26,8 @@ import org.spongepowered.asm.service.ITransformerProvider;
 import org.spongepowered.asm.util.ReEntranceLock;
 
 import onedsix.loader.core.LoaderInitialization;
+import static onedsix.loader.core.LoaderInitialization.config;
+import static onedsix.loader.core.LoaderInitialization.config;
 
 public class ModMixinService implements IMixinService, IClassProvider, IClassBytecodeProvider, ITransformerProvider, IClassTracker {
 	static IMixinTransformer transformer;
@@ -87,7 +89,7 @@ public class ModMixinService implements IMixinService, IClassProvider, IClassByt
 
 	@Override
 	public String getName() {
-		return "MiniMods/Mixin";
+		return "MiniSponge/Mixin";
 	}
 
 	@Override
@@ -202,7 +204,7 @@ public class ModMixinService implements IMixinService, IClassProvider, IClassByt
 
 	@Override
 	public String getSideName() {
-		return "CLIENT";
+		return config.getJSONObject("target").getString("side");
 	}
 
 	@Override

@@ -7,6 +7,7 @@
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mods/core-redstone-extra/MiniMods.mod-core-redstone-extra.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mods/core-redstone-extra/MiniMods.mod-core-redstone-extra.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mods/core-redstone/MiniMods.mod-core-redstone.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mods/core-redstone/MiniMods.mod-core-redstone.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/mods/debug-test/MiniMods.mod-debug-test.main.iml" filepath="$PROJECT_DIR$/.idea/modules/mods/debug-test/MiniMods.mod-debug-test.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/MiniSponge.main.iml" filepath="$PROJECT_DIR$/.idea/modules/MiniSponge.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/minicraft/patches/b/patches-sources.iml" filepath="$PROJECT_DIR$/minicraft/patches/b/patches-sources.iml" />
     </modules>
   </component>

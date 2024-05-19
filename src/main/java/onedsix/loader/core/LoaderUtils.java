@@ -1,13 +1,14 @@
 package onedsix.loader.core;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
 
+@Slf4j
 public class LoaderUtils {
 	/**
 	 * Reading the string from the input stream.
@@ -17,6 +18,16 @@ public class LoaderUtils {
 	public static String readStringFromInputStream(InputStream in) {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
 		return String.join("\n", reader.lines().toArray(String[]::new));
+	}
+
+	public static String readStringFromFile(File in) {
+		try {
+			return readStringFromInputStream(new FileInputStream(in));
+		}
+		catch (Exception e) {
+			log.error("Could not read from file: ", e);
+			return null;
+		}
 	}
 
 	/**
@@ -29,7 +40,7 @@ public class LoaderUtils {
 	 * 		</code>
 	 * </p>
 	 */
-	@SuppressWarnings({"deprecated", "removal"})
+	@SuppressWarnings({"deprecated", "removal", "rawtypes"})
 	public static class CallingClass extends SecurityManager { // TODO: SecurityManager marked for removal
 		public static final CallingClass INSTANCE = new CallingClass();
 

@@ -1,9 +1,8 @@
 package onedsix.loader.core;
 
-import java.util.StringTokenizer;
-
 import lombok.extern.slf4j.Slf4j;
-import onedsix.core.util.Logger;
+
+import java.util.StringTokenizer;
 
 /*
  * Licensed to the Apache Software Foundation (ASF) under one

@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import onedsix.loader.mixin.ModClassDelegate;
 import onedsix.loader.mixin.ModClassLoader;
 import onedsix.loader.mixin.ModMixinBootstrap;
+import org.json.JSONObject;
 
 import javax.swing.*;
 import java.io.IOException;
@@ -17,11 +18,22 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.jar.Manifest;
 
+import static onedsix.loader.core.FileHandler.searchForConfig;
+
 @Slf4j
 public class LoaderInitialization {
-
+	public static final JSONObject config;
 	private static ModClassDelegate classLoader;
 	private static boolean unlocked;
+
+	static {
+		try {
+			config = searchForConfig();
+		}
+		catch (Exception e) {
+			throw new RuntimeException("Loader config is missing, misplaced, or some other error occurred that stopped it from loading. A file called \"loader.config.json\" must be located in either \"./\", \"./resources/\" (ONLY BEFORE COMPILATION), or \"./config/loader/\"", e);
+		}
+	}
 
 	public static void main(String[] args) {
 		Thread.setDefaultUncaughtExceptionHandler((thread, throwable) -> {

@@ -14,12 +14,9 @@ import java.util.ArrayList;
 public class Mods {
 	public static final ArrayList<ModContainer> mods = new ArrayList<>();
 
-	public static final String ENTRYPOINT = "onedsix.Entrypoint";
+	public static final String ENTRYPOINT = "onedsix.loader";
     public static final String GAMEVERSION = "1.0.0";
 	public static final String LOADERVERSION = "1.0.0";
-
-	public static final ModVersion COMPAT_GAME_VERSION = new ModVersion(GAMEVERSION);
-	public static final ModVersion COMPAT_LOADER_VERSION = new ModVersion(LOADERVERSION);
 
 	// A copy from FileHandler, this may need to update from the original code when updating
 	public static final String OS = System.getProperty("os.name").toLowerCase();
@@ -67,15 +64,5 @@ public class Mods {
 		} catch (ReflectiveOperationException e) {
 			throw new RuntimeException("Failed to start game", e);
 		}
-	}
-
-	public static void checkModToLoaderCompatibility(ModContainer mod) throws ModLoadingException {
-		ModContainer.ModMetadata meta = mod.metadata;
-		if (!meta.gameVersion.containsVersion(COMPAT_GAME_VERSION))
-			throw new ModLoadingException(String.format("Incompatible mod: %s: compatible game version %s; current: %s",
-				meta.modId, meta.gameVersion, GAMEVERSION));
-		if (!meta.loaderVersion.containsVersion(COMPAT_LOADER_VERSION))
-			throw new ModLoadingException(String.format("Incompatible mod: %s: compatible loader version %s; current: %s",
-				meta.modId, meta.loaderVersion, LOADERVERSION));
 	}
 }

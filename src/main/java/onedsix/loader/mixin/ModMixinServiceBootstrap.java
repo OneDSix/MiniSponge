@@ -5,12 +5,12 @@ import org.spongepowered.asm.service.IMixinServiceBootstrap;
 public class ModMixinServiceBootstrap implements IMixinServiceBootstrap {
 	@Override
 	public String getName() {
-		return "MiniMods";
+		return "MiniSponge";
 	}
 
 	@Override
 	public String getServiceClassName() {
-		return "minicraft.minimods.mixins.ModMixinService";
+		return "onedsix.loader.mixin.ModMixinService";
 	}
 
 	@Override

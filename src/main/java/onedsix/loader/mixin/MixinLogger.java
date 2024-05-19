@@ -17,7 +17,7 @@ final class MixinLogger extends LoggerAdapterAbstract {
 
 	@Override
 	public String getType() {
-		return "MiniMods Mixin Logger";
+		return "MiniSponge Mixin Logger";
 	}
 
 	@Override

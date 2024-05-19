@@ -144,7 +144,7 @@ public final class ModClassLoader extends SecureClassLoader implements ModClassD
 
 	@Override
 	public Package getPackageFwd(String name) {
-		return super.getPackage(name);
+		return super.getDefinedPackage(name);
 	}
 
 	@Override

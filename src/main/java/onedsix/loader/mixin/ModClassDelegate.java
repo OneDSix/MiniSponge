@@ -136,7 +136,7 @@ final public class ModClassDelegate {
 			try {
 				validPaths.add(path.toRealPath());
 			} catch (IOException e) {
-				System.out.print(e.getMessage());
+				log.debug(e.getMessage());
 			}
 		}
 
@@ -206,7 +206,7 @@ final public class ModClassDelegate {
 							// - using jars that are only transient (deobfuscation input or pass-through installers)
 							String msg = String.format("can't load class %s at %s as it hasn't been exposed to the game",
 									name, getCodeSource(url, fileName));
-							System.out.println(msg);
+							log.error(msg);
 							throw new ClassNotFoundException(msg);
 						} else { // load from system cl
 							if (Mods.logClassLoad) log.info(String.format("loading class %s using the parent class loader", name));
@@ -271,7 +271,7 @@ final public class ModClassDelegate {
 
 					if (!found) {
 						String msg = "class "+name+" is currently restricted from being loaded";
-						System.out.println(msg);
+						log.error(msg);
 						throw new ClassNotFoundException(msg);
 					}
 				}

@@ -1,0 +1,48 @@
+{
+  "id": "example_mod",
+  "name": "Example Mod",
+  "description": "This is an example mod.json for MiniSponge. It should not be used in production code, use the templates instead!",
+  "author": "MiniSponge Contributors",
+  "license": "CC0-1.0 (Public Domain)",
+
+  "initPoint": "org.example.examplemod.Init",
+  "version": "1.0.0",
+  "loaderVersion": "1.0.0",
+
+  "dependencies": [
+    {
+      "modId": "basemod",
+      "version": "1.1.0",
+      "referral": "https://github.com/YourName/YourMod/releases",
+
+      "type": "REQUIRED",
+      "reason": "Main dependency, needs the Entity module.",
+      "ordering": "AFTER",
+      "side": "BOTH",
+
+      "passed": {
+        "enabled_modules": ["entity"]
+      }
+    },
+    {
+      "modId": "onedsix",
+      "version": "1.1.0",
+      "ordering": "AFTER"
+    },
+    {
+      "type": "OPTIONAL",
+      "modId": "another-mod",
+      "version": "*",
+      "ordering": "BEFORE",
+      "passed": {
+        "someOption": true
+      },
+      "reason": "An optional but suggested dependency."
+    }
+  ],
+
+  "settings": {
+    "configValueResetDefaultIfOutOfScope": true,
+    "configNumericLimitIgnoreOtherTypedValue": false
+  }
+}

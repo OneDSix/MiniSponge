@@ -14,9 +14,9 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * This class is used for mod configuration.
- * There are 2 stages of configs:
- * 	The loader stage - available only in pre-init stage.
+ * This class is used for mod configuration.<br>
+ * There are 2 stages of configs:<br>
+ * 	The loader stage - available only in pre-init stage.<br>
  * 	The game stage - available only after pre-init stage.
  */
 public class ModConfig {

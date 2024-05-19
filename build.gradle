@@ -27,6 +27,9 @@ repositories {
 }
 
 dependencies {
+    // Pull from onedsix temporarily
+    //implementation 'com.github.OneDSix:onedsix:main-SNAPSHOT'
+
     // Main Loader dependencies.
     implementation "org.spongepowered:mixin:0.8.5"
     annotationProcessor "org.spongepowered:mixin:0.8.5:processor"
@@ -84,7 +87,7 @@ jar {
         }
     }
 
-    archivesBaseName = "minimods"
+    archivesBaseName = "MiniSponge"
     archiveClassifier.set('')
 
     manifest {
@@ -104,7 +107,7 @@ shadowJar {
 	shadowDistTar.enabled = false
 	shadowDistZip.enabled = false
 
-    archivesBaseName = "minimods"
+    archivesBaseName = "MiniSponge"
 
     manifest {
         attributes(

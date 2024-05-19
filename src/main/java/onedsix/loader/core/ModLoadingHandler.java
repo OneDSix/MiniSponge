@@ -1,24 +1,14 @@
 package onedsix.loader.core;
 
 import lombok.extern.slf4j.Slf4j;
-import onedsix.core.util.Logger;
-
-import java.awt.BorderLayout;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.awt.Canvas;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.BasicStroke;
-import java.awt.font.FontRenderContext;
-import java.awt.font.LineMetrics;
 
 import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.LineMetrics;
+import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 @Slf4j
 public class ModLoadingHandler {
@@ -82,7 +72,7 @@ public class ModLoadingHandler {
 						textG.drawString(progressText, (int) (width / 2 - font.getStringBounds(progressText, frc).getWidth() / 2), (int) (165 + progressTextBounds.getHeight() / 2 - progressTextBounds.getDescent()));
 					}
 				}
-			} catch (NullPointerException e) {} // There might be some NullPointerException occurs when accessing secondaryPro.
+			} catch (NullPointerException ignored) {} // There might be some NullPointerException occurs when accessing secondaryPro.
 
 			// Draw the third progress bar.
 			try {
@@ -100,7 +90,7 @@ public class ModLoadingHandler {
 						textG.drawString(progressText, (int) (width / 2 - font.getStringBounds(progressText, frc).getWidth() / 2), (int) (265 + progressTextBounds.getHeight() / 2 - progressTextBounds.getDescent()));
 					}
 				}
-			} catch (NullPointerException e) {} // There might be some NullPointerException occurs when accessing detailPro.
+			} catch (NullPointerException ignored) {} // There might be some NullPointerException occurs when accessing detailPro.
 
 			// Release any system items that are using this method. (so we don't have crappy framerates)
 			g.dispose();
@@ -130,7 +120,7 @@ public class ModLoadingHandler {
 		frame.pack();
 
 		try {
-			BufferedImage logo = ImageIO.read(ModLoadingHandler.class.getResourceAsStream("./icon.png")); // Load the window logo
+			BufferedImage logo = ImageIO.read(ModLoadingHandler.class.getResourceAsStream("/icon.png")); // Load the window logo
 			frame.setIconImage(logo);
 		} catch (Exception e) {
 			e.printStackTrace();

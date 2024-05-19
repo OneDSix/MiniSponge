@@ -10,6 +10,10 @@ I highly recommend the game, even if development is slow these days. Drop a PR o
 
 ### Adding MSL to a project
 
+#### Prerequisites
+
+-
+
 #### Pre-Compile
 
 TODO
@@ -38,7 +42,25 @@ TODO
 tldr;
 ```json
 {
-  "entrypoint": "org.example.Entrypoint"
+  "target": {
+    "entrypoint": "onedsix.Entrypoint", // The entrypoint class of your project
+    "version": "1.0.0", // The version of your project
+    "side": "CLIENT" // The "side" of your project, either "CLIENT" or "SERVER"
+  },
+  "loader": {
+    "dependencies": {
+      "ignoreCyclicErrors": false, // If the loader should ignore CyclicDependencyErrors (dangerous!)
+      "ignoreMissingErrors": false // If the loader should ignore MissingDependencyExceptions (dangerous!)
+    },
+    "target": {
+      "passArgs": true // If the args passed to the loader should also be passed to the target (may cause conflicts)
+    },
+    "logging": {
+      "enableDebug": false, // Enable Debug logging
+      "enableLogging": true, // Enable Logging altogether
+      "enablePassthroughLogging": true // Enable passthrough of the target's std::out
+    }
+  }
 }
 ```
 

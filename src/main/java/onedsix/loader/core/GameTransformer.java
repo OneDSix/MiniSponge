@@ -1,15 +1,10 @@
 package onedsix.loader.core;
 
 import lombok.extern.slf4j.Slf4j;
-import onedsix.core.Vars;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.FieldNode;
-import org.objectweb.asm.tree.MethodInsnNode;
-import org.objectweb.asm.tree.MethodNode;
+import org.objectweb.asm.tree.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +17,8 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unused")
+import static onedsix.loader.core.LoaderInitialization.config;
+
 @Slf4j
 public class GameTransformer {
 	private static HashMap<String, byte[]> patchedClasses = new HashMap<>();
@@ -129,7 +125,7 @@ public class GameTransformer {
 			return new ClassReader(data);
 		}
 
-		try (JarFile jar = new JarFile(Vars.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath())) {
+		try (JarFile jar = new JarFile(getClass(config.getJSONObject("target").getString("entrypoint")).getProtectionDomain().getCodeSource().getLocation().toURI().getPath())) {
 			JarEntry entry = jar.getJarEntry(name.replace(".", "/").concat(".class"));
 			if (entry == null) return null;
 
@@ -147,8 +143,8 @@ public class GameTransformer {
 		ClassNode mainClass = readClass(getClassSource(Mods.ENTRYPOINT));
 		MethodNode initMethod = findMethod(mainClass, (method) -> method.name.equals("main") && method.desc.equals("([Ljava/lang/String;)V"));
 
-		System.out.print(String.format("Found init method: %s -> %s", Mods.ENTRYPOINT, mainClass.name));
-		System.out.print(String.format("Patching init method %s%s", initMethod.name, initMethod.desc));
+		log.info(String.format("Found init method: %s -> %s", Mods.ENTRYPOINT, mainClass.name));
+		log.info(String.format("Patching init method %s%s", initMethod.name, initMethod.desc));
 		ListIterator<AbstractInsnNode> it = initMethod.instructions.iterator();
         it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ModHandler.class.getName().replace('.', '/'), "initPhaseMods", "()V", false));
 		addPatchedClass(mainClass);
@@ -157,8 +153,8 @@ public class GameTransformer {
         ClassNode plusInitializer = readClass(getClassSource(Mods.entrypoint));
         MethodNode postInitMethod = findMethod(plusInitializer, (method) -> method.name.equals("run") && method.desc.equals("()V"));
 
-		System.out.print(String.format("Found postInit method: %s -> %s", Mods.entrypoint, plusInitializer.name));
-		System.out.print(String.format("Patching postInit method %s%s", postInitMethod.name, postInitMethod.desc));
+		log.info(String.format("Found postInit method: %s -> %s", Mods.entrypoint, plusInitializer.name));
+		log.info(String.format("Patching postInit method %s%s", postInitMethod.name, postInitMethod.desc));
         it = postInitMethod.instructions.iterator();
         it.add(new MethodInsnNode(Opcodes.INVOKESTATIC, ModHandler.class.getName().replace('.', '/'), "initMods", "()V", false));
 		addPatchedClass(plusInitializer);
@@ -174,5 +170,14 @@ public class GameTransformer {
 
 	public static byte[] getTransformed(String key) {
 		return patchedClasses.get(key);
+	}
+
+	public static Class getClass(String name) {
+		try {
+			return Class.forName(name);
+		}
+		catch (ClassNotFoundException e) {
+			throw new RuntimeException(e.getMessage(), e);
+		}
 	}
 }

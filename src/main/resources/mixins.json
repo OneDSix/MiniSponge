@@ -1,11 +1,9 @@
 {
   "required": true,
-  "package": "onedsix.loader.coremods.mixins",
+  "package": "",
   "priority": 2147483647,
   "minVersion": "0.8.5",
-  "mixins": [
-    "EntryMixin"
-  ],
+  "mixins": [],
   "injectors": {
     "defaultRequire": 1
   }
